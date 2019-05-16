@@ -1,0 +1,13 @@
+subject
+TRIAL
+xfix
+yfix
+zfix
+FIX_START
+FIX_END
+fixdur
+Spotlight
+Rating
+IMAGE
+Position
+EYE_USED
