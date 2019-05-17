@@ -6,8 +6,9 @@ Therefore, bear with us!
 
 This toolbox is thought as an extension of iMap4, and it preserves the underlying concepts on Linear Mixed Modelling and Non Parametrical Statistical Analysis. An extensive guidebook for iMap4D is still in preparation, however the guide for iMap4 still applies in large measure:  https://junpenglao.gitbooks.io/imap4_guidebook/content/
 
-To start the toolbox's interface, simply run the file iMAP4D.m
-A working simulation can be run by uploading the following files from the folder 'Data_sample_4D_DEMO'
+To start the toolbox's interface, simply run the file iMAP4D.m.
+
+A working simulation can then be run by uploading the following files from the folder 'Data_sample_4D_DEMO'
 - 'dataset_teapot.txt' after clicking on 'Import 4D data'
         the file contains the dataset in 13 columns, including Subject ID
 - 'labels4D.txt' after selecting 'Check 4D Columns'   
