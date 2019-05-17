@@ -39,16 +39,20 @@ uicontrol('parent',S.fh,'Style','pushbutton','Units','pixel',...
     'String','Linear Contrast','position',[210 50 sz_pshb1(1) sz_pshb1(2)],...
     'Callback',@contrast);
 
+%%    still to adjust %%%
+
+
 %pshb_posthoc
-uicontrol('parent',S.fh,'Style','pushbutton','Units','pixel',...
-    'String','Post-Hoc','position',[305 50 sz_pshb1(1) sz_pshb1(2)],...
-    'Callback',@post_hoc);
+% % % % uicontrol('parent',S.fh,'Style','pushbutton','Units','pixel',...
+% % % %     'String','Post-Hoc','position',[305 50 sz_pshb1(1) sz_pshb1(2)],...
+% % % %     'Callback',@post_hoc);
 
 %pshb_multiple_comparison_contrast
-uicontrol('parent',S.fh,'Style','pushbutton','Units','pixel',...
-    'String','Multiple Comparison Correction','position',[30 10 160 sz_pshb1(2)],...
-    'Callback',@multiple_comparison_correction);
+% % % uicontrol('parent',S.fh,'Style','pushbutton','Units','pixel',...
+% % %     'String','Multiple Comparison Correction','position',[30 10 160 sz_pshb1(2)],...
+% % %     'Callback',@multiple_comparison_correction);
 
+%%
 
 %pshb_display_results
 uicontrol('parent',S.fh,'Style','pushbutton','Units','pixel',...
@@ -137,7 +141,7 @@ uiwait(gcf)
         % imapLMMdisplay(StatMap,normalized,backgroundfile(2:end-1),cmap(2:end-1),colormaprange,distplot);
         
         % go to the Multiple comparison tab
-        StatMap_c=multiple_comparison_tab(LMMmap,FixMap,StatMap,pathname);
+%%%%%%%        StatMap_c=multiple_comparison_tab(LMMmap,FixMap,StatMap,pathname);
         
     end
 
@@ -332,7 +336,7 @@ uiwait(gcf)
                 imapLMMdisplay4D(obj,StatMap,0,[],[],[],[],pathname)
                 % imapLMMdisplay(StatMap,normalized,backgroundfile(2:end-1),cmap(2:end-1),colormaprange,distplot);
                 
-                StatMap_c=multiple_comparison_tab(LMMmap,FixMap,StatMap,pathname);
+                %%%%StatMap_c=multiple_comparison_tab(LMMmap,FixMap,StatMap,pathname);
             end
         end
         
@@ -340,6 +344,8 @@ uiwait(gcf)
             delete(gcf)
         end
     end
+
+
 
     function post_hoc(~,~)
         if isempty(StatMap_c)==0
@@ -353,7 +359,8 @@ uiwait(gcf)
             else
             RawmapMAT=load(strcat(pathname,filename));
             try
-                [Posthoc]=imapLMMposthoc(StatMap_c,RawmapMAT.RawMap,LMMmap,'mean',1);
+                %% this still needs to be adjusted
+                [Posthoc]=imapLMMposthoc4D(StatMap_c,RawmapMAT.RawMap,LMMmap,'mean',1);
             catch
                 errordlg('Please select the right file')
             end
@@ -398,6 +405,8 @@ uiwait(gcf)
             end
         end
     end
+
+
 
     function display_results(~,~)
         
@@ -460,6 +469,8 @@ uiwait(gcf)
         
         
     end
+
+
     function multiple_comparison_correction(~,~)
         
         [filename, pathname] = uigetfile('*.mat',' Select StatMap to proceed');

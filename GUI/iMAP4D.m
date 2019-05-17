@@ -252,7 +252,6 @@ else
     set(hObject,'visible','off');
 end
 
-
 % --------------------------------------------------------------------
 function uitoggletool1_ClickedCallback(hObject, eventdata, handles)
 % hObject    handle to uitoggletool1 (see GCBO)

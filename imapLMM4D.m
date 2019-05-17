@@ -60,7 +60,7 @@ if isempty(Mask) == 1
     Mask      = ones(ySize2);
 end
 %% debug!!
-Mask(1:3600)=false;
+%Mask(1:3600)=false;
 %%
 compuIdx      = find(Mask(:) == 1);
 if isempty(compuIdx)

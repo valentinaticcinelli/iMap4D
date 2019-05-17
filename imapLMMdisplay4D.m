@@ -247,7 +247,8 @@ switch opt.type
                 heatmapObj4D(obj,NaN*toimage_nan);
                 hold on
                 scatter3(obj.v(:,1),obj.v(:,2),obj.v(:,3),30,squeeze(toimagesg),'filled','MarkerEdgeColor','none')
-                h=colorbar;          
+                h=colorbar;      
+                caxis(range1);
                 colormap(colourmap)
                 set(h,'ylim',range2)
                 
@@ -313,13 +314,23 @@ switch opt.type
                     range1=[-mapmax1 mapmax1];
                 end
                 toimage2=toimage;
-                toimage2(bwperim(masktmp))=0;
+                toimage2(toimage2==range1(1))=NaN;
+                %toimage2(bwperim(masktmp))=0;
                 % toimagesg=indtorgb(toimage2,range1(1),range1(2),colourmap);
-                imshow(toimage2,range1,'colormap',colourmap)
-                h=colorbar;set(h,'ylim',range2)
+                %%%%%%%%%%%%imshow(toimage2,range1,'colormap',colourmap)    
+                heatmapObj4D(obj,toimage2);
+                hold on
+                h=colorbar;          
+                colormap(colourmap)
+                caxis(range1);
+                set(h,'ylim',range2)              
+%                 
+%                 h=colorbar;set(h,'ylim',range2)
                 set(gca,'XTick',[],'YTick',[])
                 title('Significant area marked by white line')
-                cd(['./' foldername]);print('-dpng','-r300',genvarname(label{ip}));cd('..');
+                cd([ foldername]);
+                print('-dpng','-r300',genvarname(label{ip}));
+                cd(currentdirectory);
             end
         end
         
@@ -334,12 +345,14 @@ switch opt.type
         mapmax=maprangetmp(round(length(maprangetmp)*cr));
         % mapmin=min(maptemp(:));
         mapmaxb=max(abs(betatmp(:)));
-        if ~isempty(im3D)
-            im3D2=imresize(im3D,[size(maptemp,2),size(maptemp,3)],'nearest');
-        end
+%         if ~isempty(im3D)
+%             im3D2=imresize(im3D,[size(maptemp,2),size(maptemp,3)],'nearest');
+%         end
         for ip=1:length(label)
             toimage=squeeze(maptemp(ip,:,:));
+            toimage_nan=toimage;
             toimage(isnan(toimage)==1)=0;
+            
             toimagebeta=squeeze(betatmp(ip,:,:));
             toimagebeta(isnan(toimagebeta)==1)=0;
             % pvaltmp=squeeze(pmptemp(ip,:,:));
@@ -364,16 +377,30 @@ switch opt.type
                 end
                 
                 subplot(2,2,1);
-                imshow(toimage,range1,'colormap',colourmap);
-                h=colorbar;set(h,'ylim',range2)
-                % axis off
+                toimage(toimage==range1(1))=NaN;
+                heatmapObj4D(obj,toimage);
+                hold on
+                h=colorbar;          
+                colormap(colourmap)
+                caxis(range1);
+                set(h,'ylim',range2)  
+% %                 imshow(toimage,range1,'colormap',colourmap);
+% %                 h=colorbar;set(h,'ylim',range2)
+% %                 % axis off
                 set(gca,'XTick',[],'YTick',[])
                 title('Statistic value map')
                 
                 if nansum(toimagebeta(:))~=0
                     subplot(2,2,3);
-                    imshow(toimagebeta,range1beta,'colormap',colourmap);
-                    h=colorbar;set(h,'ylim',range2beta)
+                  %  imshow(toimagebeta,range1beta,'colormap',colourmap);
+                   % h=colorbar;set(h,'ylim',range2beta)
+                                   toimagebeta(toimagebeta==range1(1))=NaN;
+                heatmapObj4D(obj,toimagebeta);
+                hold on
+                h=colorbar;          
+                colormap(colourmap)
+                caxis(range1);
+                set(h,'ylim',range2)  
                     % axis off
                     set(gca,'XTick',[],'YTick',[])
                     title('Beta map')
@@ -381,66 +408,92 @@ switch opt.type
                 
                 subplot(2,2,2);
                 toimage2=toimage;
-                toimage2(bwperim(masktmp))=NaN;
+                %toimage2(bwperim(masktmp))=NaN;
+
                 toimagesg=indtorgb(toimage2,range1(1),range1(2),colourmap);
-                imshow(toimagesg)
+                toimagesg(toimagesg==range1(1))=NaN;
+                                
+                heatmapObj4D(obj,NaN*toimage_nan);
+                hold on
+                scatter3(obj.v(:,1),obj.v(:,2),obj.v(:,3),30,squeeze(toimagesg),'filled','MarkerEdgeColor','none')
+                h=colorbar;      
+                caxis(range1);
+                colormap(colourmap)
+                set(h,'ylim',range2)
+                
+                %imshow(toimagesg)
                 set(gca,'XTick',[],'YTick',[])
                 title('Significant area marked by dark line')
                 
                 if nansum(toimagebeta(:))~=0
                     subplot(2,2,4);
                     toimage2beta=toimagebeta;
-                    toimage2beta(bwperim(masktmp))=NaN;
-                    toimagesgbeta=indtorgb(toimage2beta,range1beta(1),range1beta(2),colourmap);
-                    imshow(toimagesgbeta)
-                    set(gca,'XTick',[],'YTick',[])
-                    title('Significant area marked by dark line')
-                end
-                cd(['./' foldername]);print('-depsc2','-r300',genvarname(label{ip}));cd('..');
-                if ~isempty(im3D)
-                    figure('NumberTitle','off','Name',[label{ip} '(with background)'] ,'Position',scrsz);
                     
-                    subplot(2,2,1);
-                    toimagergb=indtorgb(toimage2,range1(1),range1(2),colourmap);
-                    toimagebg=toimagergb.*0.7+im3D2.*0.3;
-                    imshow(toimagebg,range1);
-                    % axis off
-                    set(gca,'XTick',[],'YTick',[])
-                    title('Statistic value map')
-                    if nansum(toimagebeta(:))~=0
-                        subplot(2,2,3);
-                        toimagebgbeta=toimagesgbeta.*0.7+im3D2.*0.3;
-                        imshow(toimagebgbeta,range1beta);
-                        % axis off
-                        set(gca,'XTick',[],'YTick',[])
-                        title('Beta map')
-                    end
-                    subplot(2,2,2)                   
-                    hc=imagesc(im3D2,range1);set(hc,'AlphaData',0.25);axis equal;
-                    hold on
-                    toimage2(~masktmp)=NaN;
-                    contv=linspace(min(toimage2(:)),max(toimage2(:)),6);
-                    if isfinite(contv)
-                        imcontour(toimage2,contv);colorbar;caxis([0 range1(end)])
-                    end
-                    imcontour(1:size(masktmp,2),1:size(masktmp,1),masktmp,1,'k','LineWidth',1)                    
+                    %toimage2beta(bwperim(masktmp))=NaN;
+                   
+                    toimagesgbeta=indtorgb(toimage2beta,range1beta(1),range1beta(2),colourmap);
+                    toimagesgbeta(toimagesgbeta==range1(1))=NaN;
+                    
+                heatmapObj4D(obj,NaN*toimage_nan);
+                hold on
+                scatter3(obj.v(:,1),obj.v(:,2),obj.v(:,3),30,squeeze(toimagesgbeta),'filled','MarkerEdgeColor','none')
+                h=colorbar;      
+                caxis(range1);
+                colormap(colourmap)
+                set(h,'ylim',range2)
+                    %imshow(toimagesgbeta)
                     set(gca,'XTick',[],'YTick',[])
                     title('Significant area marked by dark line')
-                    if nansum(toimagebeta(:))~=0
-                        subplot(2,2,4)
-                        hc=imagesc(im3D2,range1);set(hc,'AlphaData',0.25);axis equal;
-                        hold on
-                        toimage2beta(~masktmp)=NaN;
-                        contv=linspace(min(toimage2beta(:)),max(toimage2beta(:)),6);
-                        if isfinite(contv)
-                            imcontour(toimage2beta,contv);colorbar;caxis([0 range1beta(end)])
-                        end
-                        imcontour(1:size(masktmp,2),1:size(masktmp,1),masktmp,1,'k','LineWidth',1);
-                        set(gca,'XTick',[],'YTick',[])
-                        title('Significant area marked by dark line')
-                    end
-                    cd(['./' foldername]);print('-depsc2','-r300',[genvarname(label{ip}) '(with background)']);cd('..');
                 end
+                cd([ foldername]);
+                print('-depsc2','-r300',genvarname(label{ip}));
+                cd(currentdirectory);
+% % %                 if ~isempty(im3D)
+% % %                     figure('NumberTitle','off','Name',[label{ip} '(with background)'] ,'Position',scrsz);
+% % %                     
+% % %                     subplot(2,2,1);
+% % %                     toimagergb=indtorgb(toimage2,range1(1),range1(2),colourmap);
+% % %                     toimagebg=toimagergb.*0.7+im3D2.*0.3;
+% % %                     imshow(toimagebg,range1);
+% % %                     axis off
+% % %                     set(gca,'XTick',[],'YTick',[])
+% % %                     title('Statistic value map')
+% % %                     if nansum(toimagebeta(:))~=0
+% % %                         subplot(2,2,3);
+% % %                         toimagebgbeta=toimagesgbeta.*0.7+im3D2.*0.3;
+% % %                         imshow(toimagebgbeta,range1beta);
+% % %                         axis off
+% % %                         set(gca,'XTick',[],'YTick',[])
+% % %                         title('Beta map')
+% % %                     end
+% % %                     subplot(2,2,2)                   
+% % %                     hc=imagesc(im3D2,range1);set(hc,'AlphaData',0.25);axis equal;
+% % %                     hold on
+% % %                     toimage2(~masktmp)=NaN;
+% % %                     contv=linspace(min(toimage2(:)),max(toimage2(:)),6);
+% % %                     if isfinite(contv)
+% % %                         imcontour(toimage2,contv);colorbar;caxis([0 range1(end)])
+% % %                     end
+% % %                     imcontour(1:size(masktmp,2),1:size(masktmp,1),masktmp,1,'k','LineWidth',1)                    
+% % %                     set(gca,'XTick',[],'YTick',[])
+% % %                     title('Significant area marked by dark line')
+% % %                     if nansum(toimagebeta(:))~=0
+% % %                         subplot(2,2,4)
+% % %                         hc=imagesc(im3D2,range1);set(hc,'AlphaData',0.25);axis equal;
+% % %                         hold on
+% % %                         toimage2beta(~masktmp)=NaN;
+% % %                         contv=linspace(min(toimage2beta(:)),max(toimage2beta(:)),6);
+% % %                         if isfinite(contv)
+% % %                             imcontour(toimage2beta,contv);colorbar;caxis([0 range1beta(end)])
+% % %                         end
+% % %                         imcontour(1:size(masktmp,2),1:size(masktmp,1),masktmp,1,'k','LineWidth',1);
+% % %                         set(gca,'XTick',[],'YTick',[])
+% % %                         title('Significant area marked by dark line')
+% % %                     end
+% % %                     cd([foldername]);
+% % %                     print('-depsc2','-r300',[genvarname(label{ip}) '(with background)']);
+% % %                     cd(currentdirectory);
+% % %                 end
             end
         end
 end
@@ -472,7 +525,9 @@ if distplot~=0
         set(gca,'yscale','log');% Change scale
         title(label{ip})
     end
-    cd(['./' foldername]);print('-depsc2','-r300','Map value distribution');cd('..');
+    cd([ foldername]);
+    print('-depsc2','-r300','Map value distribution');
+    cd(currentdirectory);
     if isfield(StatMap,'beta')==1
         figure('NumberTitle','off','Name','Beta value distribution','Position',scrsz);
         for ip=1:length(label)
@@ -496,6 +551,8 @@ if distplot~=0
             set(gca,'yscale','log');% Change scale
             title(label{ip})
         end
-        cd(['./' foldername]);print('-depsc2','-r300','Beta value distribution');cd('..');
+        cd([ foldername]);
+        print('-depsc2','-r300','Beta value distribution');
+        cd(currentdirectory);
     end
 end
