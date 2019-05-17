@@ -1,4 +1,4 @@
-function [Posthoc]=imapLMMposthoc(StatMap,FixMap,LMMmap,method,flag,formula2)
+function [Posthoc]=imapLMMposthoc4D(StatMap,FixMap,LMMmap,method,flag,formula2)
 % Usage: [PostHoc]=imapLMMposthoc(StatMap,FixMap,LMMmap,method,flag,formula2)
 %           method   - 'mean'/'sum' value in the cluster
 %           flag     - 1 display result (default)
