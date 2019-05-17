@@ -11,7 +11,7 @@ To start the toolbox's interface, simply run the file iMAP4D.m.
 A working simulation can then be run by uploading the following files from the folder 'Data_sample_4D_DEMO'
 - 'dataset_teapot.txt' after clicking on 'Import 4D data'
         the file contains the dataset in 13 columns, including Subject ID
-- 'labels4D.txt' after selecting 'Check 4D Columns'   
+- 'label4D.txt' after selecting 'Check 4D Columns'   
         the file contains the Columns name for the dataset file
 - 'teapot.obj' after clicking on 'Import 3D Model'
         the file contains the 3D model of the standard Utah teapot, according to Wavefront fromat (.obj)
