@@ -6,8 +6,8 @@ zfix
 FIX_START
 FIX_END
 fixdur
-Spotlight
+First_Condition
 Rating
-IMAGE
-Position
+Second_Condition
+Third_Condition
 EYE_USED

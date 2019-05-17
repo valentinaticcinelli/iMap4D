@@ -36,9 +36,14 @@ function [V,F3,F4]=loadawobj(modelname,opts)
 % and Anders Sandberg's
 % vertface2obj.m and saveobjmesh.m
 %
+% Original BSD licence software from:
 % W.S. Harwin, University Reading, 2006,2010,2015-6.
+% Modified and adapted to iMap4D by 
+% Valentina Ticcinelli, Fribourg University, 2019
 % Matlab BSD license
-% thanks also to Doug Hackett
+
+
+
 %
 
 version=0.32; % add 1 to get the matlab version
