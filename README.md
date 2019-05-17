@@ -1,5 +1,5 @@
 # iMap4D
-A toolbox for the analysis of Virtual Reality eye-tracking data, with creation of 4D fixation maps and statistical analysis
+A toolbox for the analysis of Virtual Reality eye-tracking data, with creation of 4D fixation maps and statistical analysis.
 
 This version is a beta. We did our best in debugging, but please let us now if you run into any issues. 
 
