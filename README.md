@@ -19,6 +19,6 @@ A working simulation can then be run by uploading the following files from the f
 
 This version is a beta. We did our best in debugging, but please let us now if you run into any issues.         
 Also, for questions, suggestions or just to make sure you receive notifications on major updates, please feel free to drop an email to:
-v.ticcinelli@unifr.ch
+valentina.ticcinelli@unifr.ch
 
 Cheers!
