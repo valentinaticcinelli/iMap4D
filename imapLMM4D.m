@@ -1,10 +1,10 @@
 function [LMMmap,lmexample] = imapLMM4D(FixMap,PredictorM,Mask,opt,formula,varargin)
-% Usage: [LMMmap,lmexample] = imapLMM(FixMap,PredictorM,Mask,opt,formula,varargin)
-% Input:    FixMap - total number of trials * xSize * ySize
+% Usage: [LMMmap,lmexample] = imapLMM4D(FixMap,PredictorM,Mask,opt,formula,varargin)
+% Input:    FixMap - total number of trials * nVertices
 %       PredictorM - dataset format of condition Matrix, total number of
 %                    trials * number of predictor. Categorical column must
 %                    set to nominal
-%             Mask - 2D mask, for reducing the number of computation
+%             Mask - Vertices mask, for reducing the number of computation
 %              opt - structure. option to define parallel grid (opt.parallelname)
 %                    and option to compute each single categorical condition
 %                    beta (opt.singlepredi)
@@ -23,10 +23,12 @@ function [LMMmap,lmexample] = imapLMM4D(FixMap,PredictorM,Mask,opt,formula,varar
 % help fitlme
 % See also fitlme, LinearMixedModel, LinearModel, GeneralizedLinearModel, NonLinearModel.
 %
-% 2014-11-08 Code updated to sort out compatible issue with Matlab 2014b
-% 2015-02-12 Junpeng Lao, University of Fribourg.
+% Based on 2015-02-12 Junpeng Lao, University of Fribourg, Copyright (C) iMap Team 2015
+
+% Last modified: 18/05/2019 by Valentina Ticcinelli
+% valentina.ticcinelli@unifr.ch
+% Copyright (C) iMap Team 2019
 %--------------------------------------------------------------------------
-% Copyright (C) iMap Team 2015
 %% check Matlab version and toolbox before start
 v=ver;
 if size(PredictorM,1) ~= size(FixMap,1)

@@ -1,28 +1,30 @@
 function varargout = imap4D_gui(varargin)
-% IMAP_GUI MATLAB code for imap_gui.fig
-%      IMAP_GUI, by itself, creates a new IMAP_GUI or raises the existing
+% IMAP4D_GUI MATLAB code for imap4D_gui.fig
+%      IMAP4D_GUI, by itself, creates a new IMAP4D_GUI or raises the existing
 %      singleton*.
 %
-%      H = IMAP_GUI returns the handle to a new IMAP_GUI or the handle to
+%      H = IMAP4D_GUI returns the handle to a new IMAP4D_GUI or the handle to
 %      the existing singleton*.
 %
-%      IMAP_GUI('CALLBACK',hObject,eventData,handles,...) calls the local
-%      function named CALLBACK in IMAP_GUI.M with the given input arguments.
+%      IMAP4D_GUI('CALLBACK',hObject,eventData,handles,...) calls the local
+%      function named CALLBACK in IMAP4D_GUI.M with the given input arguments.
 %
-%      IMAP_GUI('Property','Value',...) creates a new IMAP_GUI or raises the
+%      IMAP4D_GUI('Property','Value',...) creates a new IMAP4D_GUI or raises the
 %      existing singleton*.  Starting from the left, property value pairs are
-%      applied to the GUI before imap_gui_OpeningFcn gets called.  An
+%      applied to the GUI before imap4D_gui_OpeningFcn gets called.  An
 %      unrecognized property name or invalid value makes property application
-%      stop.  All inputs are passed to imap_gui_OpeningFcn via varargin.
+%      stop.  All inputs are passed to imap4D_gui_OpeningFcn via varargin.
 %
 %      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
 %      instance to run (singleton)".
 %
 % See also: GUIDE, GUIDATA, GUIHANDLES
 
-% Edit the above text to modify the response to help imap_gui
+% Edit the above text to modify the response to help imap4D_gui
 
-% Last Modified by GUIDE v2.5 05-May-2019 19:33:41
+% Based on IMAP_GUI v2.5 05-May-2019 19:33:41
+% Last modified: 18/05/2019 by Valentina Ticcinelli
+% valentina.ticcinelli@unifr.ch
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;

@@ -1,5 +1,5 @@
 function [StatMap]=imapLMMcontrast4D(LMMmap,opt)
-% Usage: [StatMap]=imapLMMcontrast(LMMmap,opt)
+% Usage: [StatMap]=imapLMMcontrast4D(LMMmap,opt)
 % output contrast and stat from original model without multiple comparison
 % correction
 %
@@ -16,11 +16,14 @@ function [StatMap]=imapLMMcontrast4D(LMMmap,opt)
 %
 % output structure format {opt} {Pmap} {Pmask} {F/Tmap} {betamap(optional)}
 % {labels of the maps}
-% see also imapLMM, imapLMMdisplay
+% see also imapLMM4D, imapLMMdisplay4D
 %
-% 2015-02-12 Junpeng Lao, University of Fribourg.
+% Based on 2015-02-12 Junpeng Lao, University of Fribourg. Copyright (C) iMap Team 2015
+% Last modified: 18/05/2019 by Valentina Ticcinelli
+% valentina.ticcinelli@unifr.ch
+% Copyright (C) iMap Team 2019
 %--------------------------------------------------------------------------
-% Copyright (C) iMap Team 2015
+% 
 
 StatMap=struct;
 if ~isfield(opt,'alpha')

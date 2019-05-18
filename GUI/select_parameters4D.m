@@ -1,6 +1,9 @@
 function answer = select_parameters4D()
 
-%prompt={'Enter screen x in pixel','Enter screen y in pixel', 'Enter image x in pixel', 'Enter image y in pixel'};
+% in a future development the viewer starting position will be taken into
+% account for distance/smoothing parameter considerations
+% Last modified: 18/05/2019 by Valentina Ticcinelli
+% valentina.ticcinelli@unifr.ch
 
 prompt={'Starting Viewing Position','Number of points to sample the space in each dimension'};
 

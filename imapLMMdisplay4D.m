@@ -1,10 +1,10 @@
 function imapLMMdisplay4D(obj,StatMap,normalized,backgroundfile,cmap,colormaprange,distplot,pathname)
-% Usage: imapLMMdisplay(StatMap,normalized,backgroundfile,colourmap,colormaprange,distplot,foldername)
-% display result after contrast test. Input result from imapLMMcontrast
+% Usage: imapLMMdisplay4D(obj, StatMap,normalized,backgroundfile,colourmap,colormaprange,distplot,foldername)
+% display result after contrast test. Input result from imapLMMcontrast4D
 % input structure format {opt} {Pmap} {Pmask} {F/Tmap} {betamap(optional)}
 % {labels of the maps} {MCC related field}
 %   display map value would be normalized [1] as default
-%   backgroundfile could be image/matrix/[empty]
+%   backgroundfile is for now unused
 %   colormap could be predefined
 %   output distribution of statistic value (optional, default 0)
 %
@@ -19,11 +19,15 @@ function imapLMMdisplay4D(obj,StatMap,normalized,backgroundfile,cmap,colormapran
 %               for convenience (alpha/2)
 % opt.name     - for coefficients and Catepredictors only, name of each
 %               contrast (for plotting)
-% See also imapLMM, imapLMMcontrast
+% See also imapLMM4D, imapLMMcontrast4D
 %
-% 2015-02-12 Junpeng Lao, University of Fribourg.
+% Base on 2015-02-12 Junpeng Lao, University of Fribourg. Copyright (C) iMap Team 2015
+
+% Last modified: 18/05/2019 by Valentina Ticcinelli
+% valentina.ticcinelli@unifr.ch
+% Copyright (C) iMap Team 2019
 %--------------------------------------------------------------------------
-% Copyright (C) iMap Team 2015
+% 
 
 %%
 scrsz=get(0,'ScreenSize');% get screen size for output display

@@ -1,6 +1,10 @@
 function [smoothingpic] = select_smoothing4D(handles,categorical_conditions_default,continuous_conditions,categorical_conditions,continuous_conditions_default)
 %%
 % initial visual degree for smoothing - 1 degree of visual angle
+% Last modified: 18/05/2019 by Valentina Ticcinelli
+% valentina.ticcinelli@unifr.ch
+
+
 smoothing_value = 1;
 
 

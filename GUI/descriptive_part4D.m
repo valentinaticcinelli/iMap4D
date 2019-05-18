@@ -2,7 +2,9 @@ function descriptive_part4D(varargin)
 % scriptName = mfilename('fullpath');
 % [currentpath, ~, ~]= fileparts(scriptName);
 % addpath(currentpath);
-% C:\Users\Ticci\Dropbox\FribourgPC\MATLAB\Work in Progress\iMap4D\code\GUI\10_May_2019_14_48_48\
+% Last modified: 18/05/2019 by Valentina Ticcinelli
+% valentina.ticcinelli@unifr.ch
+
 if nargin==0
     [filename, pathname] = uigetfile('*.mat',' Select DescriptvM, FixMap to proceed','MultiSelect','on');
     if iscell(filename)==0 %user selects only multiple file

@@ -1,4 +1,8 @@
 function [] =heatmapObj4D(obj,valFilt)
+% Function to plot the intensity map valFilt on the obj.
+% valFilt must be a 1D vector having same length as obj.v
+% Last modified: 18/05/2019 by Valentina Ticcinelli
+% valentina.ticcinelli@unifr.ch
 
 if isfield(obj,'f4')
 patch('vertices', obj.v, 'faces', obj.f4,'FaceVertexCData',valFilt','FaceColor','interp','EdgeAlpha',[0.2]);
