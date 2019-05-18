@@ -1,4 +1,4 @@
-function [ResampStat]=imapLMMresample(FixMap,LMMmap,c,h,effect,method,nboot,grouping,rmRE,varargin)
+function [ResampStat]=imapLMMresample4D(obj,FixMap,LMMmap,c,h,effect,method,nboot,grouping,rmRE,varargin)
 % imapLMMresample performs a nonparametric statistical test by calculating
 % Monte-Carlo estimates of the significance probabilities and/or critical values
 % from the resampling distribution.

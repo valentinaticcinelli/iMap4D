@@ -99,8 +99,9 @@ switch opt.type
         %% Rsquared
         figure('NumberTitle','off','Name','R^2 of model','Position',[1 1 scrsz(3) scrsz(4)/2]);
         maprangetmp=sort(squeeze(max(abs(maptemp(1:2,mask)))));
-        mapmax=maprangetmp(round(length(maprangetmp)*cr));
+        mapmaxABS=maprangetmp(round(length(maprangetmp)*cr));
         mapmin=min(min(min(maptemp(1:2,mask))));
+        mapmax=max(max(max(maptemp(1:2,mask))));
         range1=[-mapmax mapmax];
         range2=[mapmin mapmax];
         for ip=1:2
@@ -110,8 +111,8 @@ switch opt.type
             heatmapObj4D(obj,toimage)
             %imshow(toimage,range1,'colormap',colourmap);
             h=colorbar;
-            caxis(range1);
-            set(h,'ylim',range2)
+      %      caxis(range2);
+          %  set(h,'ylim',range2)
             colormap(colourmap)
             % axis off
             set(gca,'XTick',[],'YTick',[])
@@ -137,8 +138,8 @@ switch opt.type
             %imshow(toimage,range1,'colormap',colourmap);
             h=colorbar;          
             colormap(colourmap)
-            caxis(range1);
-            set(h,'ylim',range2)
+           % caxis(range1);
+          %  set(h,'ylim',range2)
             %imshow(toimage,range2,'colormap',colourmap);
             %h=colorbar;set(h,'ylim',range2)
             % axis off
@@ -149,50 +150,6 @@ switch opt.type
         print('-depsc2','-r300','Model Criterion');
         cd(currentdirectory);
         
-% % %         if ~isempty(im3D)
-% % %             im3D2=imresize(im3D,[size(maptemp,2),size(maptemp,3)],'nearest');
-% % %             % Rsquared
-% % %             figure('NumberTitle','off','Name','R^2 of model(with background)','Position',[1 1 scrsz(3) scrsz(4)/2]);
-% % %             maprangetmp=sort(squeeze(max(abs(maptemp(1:2,mask)))));
-% % %             mapmax=maprangetmp(round(length(maprangetmp)*cr));
-% % %             mapmin=min(min(min(maptemp(1:2,mask))));
-% % %             range1=[-mapmax mapmax];
-% % %             range2=[mapmin mapmax];
-% % %             for ip=1:2
-% % %                 subplot(1,2,ip)
-% % %                 toimage=squeeze(maptemp(ip,:,:));
-% % %                 toimage(isnan(toimage)==1)=0;
-% % %                 toimagergb=indtorgb(toimage,range1(1),range1(2),colourmap);
-% % %                 toimage=toimagergb.*0.7+im3D2.*0.3;
-% % %                 imshow(toimage,range1);
-% % %                 % axis off
-% % %                 set(gca,'XTick',[],'YTick',[])
-% % %                 title(label{ip})
-% % %             end
-% % %             cd(['./' foldername]);print('-depsc2','-r300','R^2 of model(with background)');cd('..');
-% % %             % Model Criterion
-% % %             figure('NumberTitle','off','Name','Model Criterion(with background)','Position',scrsz);
-% % %             for ip=1:4
-% % %                 toimage=squeeze(maptemp(ip+2,:,:));
-% % %                 % mapabs=max(abs(toimage(:)));
-% % %                 mapmax=max(toimage(:));
-% % %                 mapmin=min(toimage(:));
-% % %                 range2=[mapmin mapmax];
-% % %                 subplot(2,2,ip)
-% % %                 if mapmax<0
-% % %                     toimage(isnan(toimage)==1)=mapmin;
-% % %                 else
-% % %                     toimage(isnan(toimage)==1)=mapmax;
-% % %                 end
-% % %                 toimagergb=indtorgb(toimage,range2(1),range2(2),colourmap);
-% % %                 toimage=toimagergb.*0.7+im3D2.*0.3;
-% % %                 imshow(toimage,range2);
-% % %                 % axis off
-% % %                 set(gca,'XTick',[],'YTick',[])
-% % %                 title(label{ip+2})
-% % %             end
-% % %             cd(['./' foldername]);print('-depsc2','-r300','Model Criterion(with background)');cd('..');
-% % %         end
         
     case 'fixed'% output Fvalue map and mask according to MCC
         %%
@@ -209,11 +166,14 @@ switch opt.type
 %             im3D2=imresize(im3D,[size(maptemp,2),size(maptemp,3)],'nearest');
 %         end
         for ip=1:length(label)
+            masktmp=double(squeeze(msktemp(ip,:,:)));
+            mask_sign=double(masktmp);
+            mask_sign(mask_sign==0)=NaN;
             toimage=squeeze(maptemp(ip,:,:));
             toimage_nan=toimage;
-            toimage(isnan(toimage)==1)=0;
+            %toimage(isnan(toimage)==1)=0;
             % pvaltmp=squeeze(pmptemp(ip,:,:));
-            masktmp=squeeze(msktemp(ip,:,:));
+            %masktmp=squeeze(msktemp(ip,:,:)); %contains the sifnificant values
             if sum(masktmp(:))==0
                 warning('No significant result from the current condition...')
             else
@@ -222,6 +182,7 @@ switch opt.type
                 maprangetmp1=sort(toimage(:));
                 mapmax1=maprangetmp1(round(length(maprangetmp1)*cr));
                 % mapmax1=max(toimage(:));
+                mapmax1=max(toimage(:));
                 mapmin1=min(toimage(:));
                 range2=[mapmin1 mapmax1];
                 if normalized==1
@@ -234,27 +195,27 @@ switch opt.type
                 heatmapObj4D(obj,toimage_nan)
                 h=colorbar;          
                 colormap(colourmap)
-                caxis(range1);
-                set(h,'ylim',range2)
+        %        caxis(range1);
+                %set(h,'ylim',range2)
 %                 imshow(toimage,range1,'colormap',colourmap);
 %                 h=colorbar;set(h,'ylim',range2)
                 % axis off
                 set(gca,'XTick',[],'YTick',[])
-                title('Statistic value map')
+                title('Statistic map (F-values)')
                 
                 subplot(1,2,2);
                 toimage2=toimage;
                 %
                 %toimage2(bwperim(masktmp))=NaN;
-                toimagesg=indtorgb(toimage2,range1(1),range1(2),colourmap);
-                toimagesg(toimagesg==range1(1))=NaN;
+                toimagesg=indtorgb(toimage2,mapmin1,mapmax1,colourmap);
+                %toimagesg(toimagesg==range1(1))=NaN;
                 heatmapObj4D(obj,NaN*toimage_nan);
                 hold on
-                scatter3(obj.v(:,1),obj.v(:,2),obj.v(:,3),30,squeeze(toimagesg),'filled','MarkerEdgeColor','none')
-                h=colorbar;      
-                caxis(range1);
-                colormap(colourmap)
-                set(h,'ylim',range2)
+                scatter3(obj.v(:,1),obj.v(:,2),obj.v(:,3),30,squeeze(toimagesg).*[mask_sign;mask_sign;mask_sign]','filled','MarkerEdgeColor','none')
+%                 h=colorbar;      
+%                  caxis([mapmin1 mapmax1]);
+%                 colormap(colourmap)
+%                 set(h,'ylim',range2)
                 
                 % imshow(toimagesg)
                 set(gca,'XTick',[],'YTick',[])
@@ -302,6 +263,8 @@ switch opt.type
             toimage(isnan(toimage)==1)=0;
             % pvaltmp=squeeze(pmptemp(ip,:,:));
             masktmp=squeeze(msktemp(ip,:,:));
+            mask_sign=double(masktmp);
+            mask_sign((mask_sign==0))=NaN;
             if sum(masktmp(:))==0
                 warning('No significant result from the current condition...')
             else
@@ -309,16 +272,16 @@ switch opt.type
                 
                 maprangetmp1=sort(toimage(:));
                 mapmax1=maprangetmp1(round(length(maprangetmp1)*cr));
-                % mapmax1=max(toimage(:));
+                mapmax1=max(toimage(:));
                 mapmin1=min(toimage(:));
                 range2=[mapmin1 mapmax1];
                 if normalized==1
-                    range1=[mapmin mapmax];
+                    range1=[mapmin1 mapmax1];
                 else
                     range1=[-mapmax1 mapmax1];
                 end
                 toimage2=toimage;
-                toimage2(toimage2==range1(1))=NaN;
+             %   toimage2(toimage2==range1(1))=NaN;
                 %toimage2(bwperim(masktmp))=0;
                 % toimagesg=indtorgb(toimage2,range1(1),range1(2),colourmap);
                 %%%%%%%%%%%%imshow(toimage2,range1,'colormap',colourmap)    
@@ -355,57 +318,64 @@ switch opt.type
         for ip=1:length(label)
             toimage=squeeze(maptemp(ip,:,:));
             toimage_nan=toimage;
-            toimage(isnan(toimage)==1)=0;
+         %   toimage(isnan(toimage)==1)=0;
             
             toimagebeta=squeeze(betatmp(ip,:,:));
-            toimagebeta(isnan(toimagebeta)==1)=0;
+           % toimagebeta(isnan(toimagebeta)==1)=0;
             % pvaltmp=squeeze(pmptemp(ip,:,:));
             masktmp=squeeze(msktemp(ip,:,:));
+            mask_sign=double(masktmp);
+            mask_sign((mask_sign==0))=NaN;
+            
             if sum(masktmp(:))==0
                 warning('No significant result from the current condition...')
             else
                 figure('NumberTitle','off','Name',label{ip},'Position',scrsz);
-                maprangetmp1=sort(toimage(:));
+                maprangetmp1=sort(toimage(:)); 
                 mapmax1=maprangetmp1(round(length(maprangetmp1)*cr));
+                mapmax1=max(toimage(:));
                 mapmin1=min(toimage(:));
+                max_abs=max([abs(mapmax1) abs(mapmin1)]);
                 range2=[mapmin1 mapmax1];
                 mapmax1beta=max(toimagebeta(:));
                 mapmin1beta=min(toimagebeta(:));
                 range2beta=[mapmin1beta mapmax1beta];
-                if normalized==1
-                    range1=[0 mapmax];
-                    range1beta=[-mapmaxb mapmaxb];
+                max_abs_beta=max([abs(mapmax1beta) abs(mapmin1beta)]);
+                if normalized==1  %to be coded for
+                    range1=[mapmin1 mapmax1];
+%                     range1beta=[-mapmaxb mapmaxb];
+                      range1beta=range2beta;
                 else
-                    range1=[0 mapmax1];
-                    range1beta=[-max(abs(toimagebeta(:))) max(abs(toimagebeta(:)))];
+                    range1=[mapmin1 mapmax1];
+                    range1beta=range2beta;               
                 end
                 
                 subplot(2,2,1);
-                toimage(toimage==range1(1))=NaN;
+            %    toimage(toimage==range1(1))=NaN;
                 heatmapObj4D(obj,toimage);
                 hold on
                 h=colorbar;          
                 colormap(colourmap)
-                caxis(range1);
-                set(h,'ylim',range2)  
+                caxis([-max_abs max_abs]);
+              %  set(h,'ylim',range2)  
 % %                 imshow(toimage,range1,'colormap',colourmap);
 % %                 h=colorbar;set(h,'ylim',range2)
 % %                 % axis off
                 set(gca,'XTick',[],'YTick',[])
-                title('Statistic value map')
+                title('Statistic map (F-values)')
                 
                 if nansum(toimagebeta(:))~=0
                     subplot(2,2,3);
                   %  imshow(toimagebeta,range1beta,'colormap',colourmap);
                    % h=colorbar;set(h,'ylim',range2beta)
-                                   toimagebeta(toimagebeta==range1(1))=NaN;
+                         %          toimagebeta(toimagebeta==range1(1))=NaN;
                 heatmapObj4D(obj,toimagebeta);
                 hold on
                 h=colorbar;          
                 colormap(colourmap)
-                caxis(range1);
-                set(h,'ylim',range2)  
-                    % axis off
+                caxis([-max_abs_beta max_abs_beta]);
+%                 set(h,'ylim',range2)  
+%                     % axis off
                     set(gca,'XTick',[],'YTick',[])
                     title('Beta map')
                 end
@@ -414,20 +384,20 @@ switch opt.type
                 toimage2=toimage;
                 %toimage2(bwperim(masktmp))=NaN;
 
-                toimagesg=indtorgb(toimage2,range1(1),range1(2),colourmap);
-                toimagesg(toimagesg==range1(1))=NaN;
+                toimagesg=indtorgb(toimage2,-max_abs, max_abs,colourmap);
+                %toimagesg(toimagesg==range1(1))=NaN;
                                 
                 heatmapObj4D(obj,NaN*toimage_nan);
                 hold on
-                scatter3(obj.v(:,1),obj.v(:,2),obj.v(:,3),30,squeeze(toimagesg),'filled','MarkerEdgeColor','none')
-                h=colorbar;      
-                caxis(range1);
+                scatter3(obj.v(:,1),obj.v(:,2),obj.v(:,3),30,squeeze(toimagesg).*[mask_sign;mask_sign;mask_sign]','filled','MarkerEdgeColor','none')
+                %h=colorbar;      
+%                 caxis(range1);
                 colormap(colourmap)
-                set(h,'ylim',range2)
+%                 set(h,'ylim',range2)
                 
                 %imshow(toimagesg)
                 set(gca,'XTick',[],'YTick',[])
-                title('Significant area marked by dark line')
+                title('Significant vertices marked by circles')
                 
                 if nansum(toimagebeta(:))~=0
                     subplot(2,2,4);
@@ -435,19 +405,20 @@ switch opt.type
                     
                     %toimage2beta(bwperim(masktmp))=NaN;
                    
-                    toimagesgbeta=indtorgb(toimage2beta,range1beta(1),range1beta(2),colourmap);
-                    toimagesgbeta(toimagesgbeta==range1(1))=NaN;
+                    toimagesgbeta=indtorgb(toimage2beta,-max_abs_beta,max_abs_beta,colourmap);
+                    %toimagesgbeta(toimagesgbeta==range1(1))=NaN;
                     
                 heatmapObj4D(obj,NaN*toimage_nan);
                 hold on
-                scatter3(obj.v(:,1),obj.v(:,2),obj.v(:,3),30,squeeze(toimagesgbeta),'filled','MarkerEdgeColor','none')
-                h=colorbar;      
-                caxis(range1);
+                scatter3(obj.v(:,1),obj.v(:,2),obj.v(:,3),30,squeeze(toimagesgbeta).*[mask_sign;mask_sign;mask_sign]','filled','MarkerEdgeColor','none')
+
+             %   h=colorbar;      
+              %  caxis(range1);
                 colormap(colourmap)
-                set(h,'ylim',range2)
+             %   set(h,'ylim',range2)
                     %imshow(toimagesgbeta)
                     set(gca,'XTick',[],'YTick',[])
-                    title('Significant area marked by dark line')
+                    title('Significant vertices marked by circles')
                 end
                 cd([ foldername]);
                 print('-depsc2','-r300',genvarname(label{ip}));

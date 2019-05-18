@@ -48,9 +48,9 @@ uicontrol('parent',S.fh,'Style','pushbutton','Units','pixel',...
 % % % %     'Callback',@post_hoc);
 
 %pshb_multiple_comparison_contrast
-% % % uicontrol('parent',S.fh,'Style','pushbutton','Units','pixel',...
-% % %     'String','Multiple Comparison Correction','position',[30 10 160 sz_pshb1(2)],...
-% % %     'Callback',@multiple_comparison_correction);
+uicontrol('parent',S.fh,'Style','pushbutton','Units','pixel',...
+    'String','Multiple Comparison Correction','position',[30 10 160 sz_pshb1(2)],...
+    'Callback',@multiple_comparison_correction);
 
 %%
 
@@ -141,7 +141,7 @@ uiwait(gcf)
         % imapLMMdisplay(StatMap,normalized,backgroundfile(2:end-1),cmap(2:end-1),colormaprange,distplot);
         
         % go to the Multiple comparison tab
-%%%%%%%        StatMap_c=multiple_comparison_tab(LMMmap,FixMap,StatMap,pathname);
+     StatMap_c=multiple_comparison_tab4D(obj,LMMmap,FixMap,StatMap,pathname);
         
     end
 
@@ -336,7 +336,7 @@ uiwait(gcf)
                 imapLMMdisplay4D(obj,StatMap,0,[],[],[],[],pathname)
                 % imapLMMdisplay(StatMap,normalized,backgroundfile(2:end-1),cmap(2:end-1),colormaprange,distplot);
                 
-                %%%%StatMap_c=multiple_comparison_tab(LMMmap,FixMap,StatMap,pathname);
+                StatMap_c=multiple_comparison_tab4D(obj,LMMmap,FixMap,StatMap,pathname);
             end
         end
         
@@ -484,7 +484,7 @@ uiwait(gcf)
                 set(h,'color','white')
                 uiwait(gcf)
             else
-                StatMap_c=multiple_comparison_tab(LMMmap,FixMap,load_StatMap.StatMap,pathname);
+                StatMap_c=multiple_comparison_tab4D(obj,LMMmap,FixMap,load_StatMap.StatMap,pathname);
             end
         end
         
